@@ -19,7 +19,8 @@ import ProfileStatusButton from './components/profile-status-button'
 import ServerCreateModal from './components/server-create-modal'
 import { ServerList } from './components/server-list'
 import { ServerListSkeleton } from './components/server-list/server-list-skeleton'
-import SettingModal, { SettingModalTabsID } from './components/setting-modal'
+import SettingModal from './components/setting-modal'
+import { SettingModalTabsID } from './components/setting-modal/store/setting-modal-tabs.context'
 
 const Inner = () => {
   const {

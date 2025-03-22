@@ -7,7 +7,7 @@ import { log } from '@/utils/log'
 
 import { Content as ProfileCard } from '../profile-card'
 
-export function MyProfile() {
+function MyProfile() {
   const myInfo = useGetSelfUser()
   const { updateAvatarImage } = useUpdateAvatarImage()
   const avatarInputRef = useRef<HTMLInputElement>(null)
@@ -138,3 +138,5 @@ export function MyProfile() {
     </section>
   )
 }
+
+export default MyProfile

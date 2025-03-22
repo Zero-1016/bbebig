@@ -20,7 +20,7 @@ const CURRENT_VALUE = (devices: AudioDevice[], value: string) => {
   return devices.find((device) => device.value === value) || devices[0]
 }
 
-export function VoiceSetting() {
+function VoiceSetting() {
   const [state, setState] = useState({
     isShowVideoTest: false,
     isShowAudioTest: false
@@ -227,3 +227,5 @@ export function VoiceSetting() {
     </section>
   )
 }
+
+export default VoiceSetting

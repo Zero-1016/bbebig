@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import { lazy, useEffect } from 'react'
 
 import CloseButton from '@/components/close-button'
 import Modal from '@/components/modal'
 import { cn } from '@/libs/cn'
 
-import { AlarmSetting } from './alarm-setting'
-import { MyAccount } from './my-account'
-import { MyProfile } from './my-profile'
-import { VoiceSetting } from './voice-setting'
+import {
+  SettingModalTabsID,
+  SettingModalTabsProvider,
+  tabs,
+  useSettingModalTabsContext
+} from './store/setting-modal-tabs.context'
 
 interface Props {
   itemId: number
@@ -15,59 +17,30 @@ interface Props {
   onClose: () => void
 }
 
-export const SettingModalTabsID = {
-  myAccount: 101,
-  myProfile: 102,
-  voiceSetting: 201,
-  alarmSetting: 202
+const ComponentMap = {
+  [SettingModalTabsID.myAccount]: lazy(() => import('./my-account')),
+  [SettingModalTabsID.myProfile]: lazy(() => import('./my-profile')),
+  [SettingModalTabsID.voiceSetting]: lazy(() => import('./voice-setting')),
+  [SettingModalTabsID.alarmSetting]: lazy(() => import('./alarm-setting'))
 }
 
-const tabs = [
-  {
-    name: '사용자 설정',
-    items: [
-      {
-        id: SettingModalTabsID.myAccount,
-        name: '내 계정'
-      },
-      {
-        id: SettingModalTabsID.myProfile,
-        name: '프로필'
-      }
-    ]
-  },
-  {
-    name: '앱 설정',
-    items: [
-      {
-        id: SettingModalTabsID.voiceSetting,
-        name: '음성 및 비디오'
-      },
-      {
-        id: SettingModalTabsID.alarmSetting,
-        name: '알림'
-      }
-    ]
-  }
-] as const
-
-function SettingModal({ itemId, isOpen, onClose }: Props) {
-  const [currentItemId, setCurrentItemId] = useState(SettingModalTabsID.myAccount)
+function Inner({ itemId, isOpen, onClose }: Props) {
+  const { currentItemId, setCurrentItemId } = useSettingModalTabsContext()
 
   useEffect(
     function initialCurrentItemId() {
-      handleClickItem(itemId)
+      handleClickItem(itemId)()
     },
+    // 컴포넌트가 마운트될 때만 실행
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemId]
   )
 
-  const handleClickItem = (itemId: number) => () => {
+  const handleClickItem = (itemId: SettingModalTabsID) => () => {
     setCurrentItemId(itemId)
   }
 
-  const handleProfileEditClick = () => {
-    setCurrentItemId(SettingModalTabsID.myProfile)
-  }
+  const SettingModalCurrentComponent = ComponentMap[currentItemId]
 
   return (
     <Modal
@@ -109,12 +82,7 @@ function SettingModal({ itemId, isOpen, onClose }: Props) {
           <div className='flex flex-[1_1_800px] bg-brand-10'>
             <div className='max-w-[740px] w-full relative'>
               <div className='overflow-y-auto h-full'>
-                {currentItemId === SettingModalTabsID.myAccount && (
-                  <MyAccount onProfileEditClick={handleProfileEditClick} />
-                )}
-                {currentItemId === SettingModalTabsID.myProfile && <MyProfile />}
-                {currentItemId === SettingModalTabsID.voiceSetting && <VoiceSetting />}
-                {currentItemId === SettingModalTabsID.alarmSetting && <AlarmSetting />}
+                <SettingModalCurrentComponent />
               </div>
               <div className='absolute right-[-40px] top-[60px] text-white'>
                 <CloseButton onClick={onClose} />
@@ -124,6 +92,14 @@ function SettingModal({ itemId, isOpen, onClose }: Props) {
         </div>
       </section>
     </Modal>
+  )
+}
+
+const SettingModal = (props: Props) => {
+  return (
+    <SettingModalTabsProvider>
+      <Inner {...props} />
+    </SettingModalTabsProvider>
   )
 }
 
