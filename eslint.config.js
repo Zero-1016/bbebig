@@ -8,7 +8,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import tanstackPlugin from '@tanstack/eslint-plugin-query'
 import unusedImports from 'eslint-plugin-unused-imports'
 import reactPlugin from 'eslint-plugin-react'
-
+import storybookPlugin from 'eslint-plugin-storybook'
 export default tseslint.config(
   { ignores: ['dist', 'node_modules', '**/*.config.js', '!**/eslint.config.js'] },
   {
@@ -39,7 +39,8 @@ export default tseslint.config(
       '@typescript-eslint': tseslint.plugin,
       onlyWarn,
       tanstack: tanstackPlugin,
-      react: reactPlugin
+      react: reactPlugin,
+      storybook: storybookPlugin
     },
     rules: {
       ...reactHooks.configs.recommended.rules,

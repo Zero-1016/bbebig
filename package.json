@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@mswjs/socket.io-binding": "^0.1.1",
     "@sentry/react": "^9.1.0",
     "@sentry/vite-plugin": "^3.1.2",
     "@stomp/stompjs": "^7.0.0",
@@ -31,6 +32,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "lucide-react": "^0.473.0",
+    "msw": "^2.7.1",
     "postcss": "^8.5.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -45,7 +47,6 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.4",
     "@eslint/js": "^9.17.0",
-    "@mswjs/socket.io-binding": "^0.1.1",
     "@storybook/addon-essentials": "^8.5.0",
     "@storybook/addon-interactions": "^8.5.0",
     "@storybook/addon-onboarding": "^8.5.0",
@@ -68,7 +69,6 @@
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^15.14.0",
     "jsdom": "^26.0.0",
-    "msw": "^2.7.1",
     "prettier": "^3.4.2",
     "sharp": "^0.33.5",
     "storybook": "^8.5.0",
