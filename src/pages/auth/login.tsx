@@ -8,7 +8,7 @@ import { LoginSchema } from '@/apis/schema/types/auth'
 import AuthInput from '@/components/auth-input'
 import CustomButton from '@/components/custom-button'
 import { useLoginMutation } from '@/hooks/queries/auth/useLoginMutation'
-
+import { toastHelper } from '@/utils/toast-helper'
 function LoginPage() {
   const navigate = useNavigate()
   const [movePage, setMovePage] = useState(false)
@@ -39,6 +39,10 @@ function LoginPage() {
     }
   }, [isSuccess, navigate])
 
+  const handlePrepare = () => {
+    toastHelper.prepare()
+  }
+
   return (
     <form
       onSubmit={handleSubmit(signIn)}
@@ -65,7 +69,12 @@ function LoginPage() {
               required
               {...register('password')}
             />
-            <button className='text-sm text-text-link mb-5'>비밀번호를 잊으셨나요?</button>
+            <button
+              type='button'
+              onClick={handlePrepare}
+              className='text-sm text-text-link mb-5'>
+              비밀번호를 잊으셨나요?
+            </button>
             <CustomButton
               variant='primary'
               size='small'
@@ -85,12 +94,22 @@ function LoginPage() {
           </div>
         </div>
         <div className='w-60 h-[344px] flex flex-col items-center justify-center text-center'>
-          <div className='w-[178px] h-[178px] rounded-[4px] bg-white-10 mb-8' />
+          <div className='w-[178px] h-[178px] rounded-[4px] bg-white-10 mb-8 flex items-center justify-center'>
+            <img
+              src='/icon/brand/icon_logo.svg'
+              alt='QR 코드'
+              width={120}
+              height={120}
+            />
+          </div>
           <h2 className='text-2xl font-bold text-white-10'>QR 코드로 로그인</h2>
           <div className='text-gray-500 leading-[1.25]'>
             <strong>Discord 모바일 앱</strong>으로 스캔해 바로 로그인 하세요.
           </div>
-          <button className='text-sm w-min-[130px] px-4 py-[2px] w-auto h-[44px] text-text-link'>
+          <button
+            type='button'
+            onClick={handlePrepare}
+            className='text-sm w-min-[130px] px-4 py-[2px] w-auto h-[44px] text-text-link'>
             <span>또는, 패스키로 로그인하세요</span>
           </button>
         </div>

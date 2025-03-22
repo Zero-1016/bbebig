@@ -2,8 +2,13 @@ import { ArrowDownToLine } from 'lucide-react'
 
 import { Picture } from '@/components/picture'
 import deviceHelper from '@/utils/device-helper'
+import { toastHelper } from '@/utils/toast-helper'
 
 function HomeHero() {
+  const handlePrepare = () => {
+    toastHelper.error('우측 상단 버튼을 클릭해주세요.')
+  }
+
   return (
     <div className='h-dvh-screen bg-[url("/background/shine-1.webp")] bg-cover bg-no-repeat pb-[7.25rem] pt-[8rem]'>
       <div className='padding-global'>
@@ -41,11 +46,15 @@ function HomeHero() {
       </div>
       <aside className='flex h-20 flex-col justify-center'>
         <div className='mobile-range:flex-col mx-auto mt-6 flex flex-row items-center justify-center gap-4'>
-          <button className='flex w-fit gap-2 rounded-full bg-white px-8 py-4 font-semibold text-black'>
+          <button
+            onClick={handlePrepare}
+            className='flex w-fit gap-2 rounded-full bg-white px-8 py-4 font-semibold text-black'>
             <ArrowDownToLine className='h-6 w-6' />
             <span>{deviceHelper.isMac ? 'Mac용 다운로드' : 'Windows용 다운로드'}</span>
           </button>
-          <button className='rounded-full bg-[#161cbb] px-8 py-4 font-semibold text-white'>
+          <button
+            onClick={handlePrepare}
+            className='rounded-full bg-[#161cbb] px-8 py-4 font-semibold text-white'>
             웹브라우저에서 Discord 열기
           </button>
         </div>

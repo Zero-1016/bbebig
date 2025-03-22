@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useStatusCheckMutation } from '@/hooks/queries/auth/useStatusCheckMutation'
-
+import { toastHelper } from '@/utils/toast-helper'
 const navigation = [
   {
     href: '#',
@@ -49,6 +49,10 @@ function Header() {
     statusCheck(undefined)
   }, [statusCheck])
 
+  const handlePrepare = () => {
+    toastHelper.prepare()
+  }
+
   return (
     <div className='absolute left-0 right-0 top-0 mobile-range:sticky mobile-range:top-0 mobile-range:z-50 mobile-range:bg-blue-30'>
       <header
@@ -69,6 +73,7 @@ function Header() {
                 key={index}
                 className='mx-[10px] p-[10px]'>
                 <a
+                  onClick={handlePrepare}
                   href={item.href}
                   className='focus:text-underline font-semibold text-white'>
                   {item.name}
